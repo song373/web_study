@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.dto.study.practice.practice07.Member;
@@ -86,14 +87,42 @@ public class Practice07Controller {
 		}
 		 
 		
-	
-		
-		
-		
+       
 		model.addAttribute("memberList", memberList);
 		}
 		return "practice/practice07/listTest";
 
 		
 	}
-}
+	
+	
+	// practice09 번 문제 풀이를 위해 추가한 코드
+	
+	//
+	//
+	
+	@GetMapping("/practice07/listTest/{type}")
+	public String listTestAppend(@PathVariable String type, Model model) {
+		
+model.addAttribute("type",type);
+		
+		if(type.equals("str")) {
+			model.addAttribute("msg", "스트링 리스트입니다.");
+		} else {
+			List<Member> memberList = new ArrayList<Member>();
+			
+			for(int i=1; i<=10; i++) {
+				memberList.add(new Member("아이디"+i, "비번"+i, "이름"+i));
+		}
+		 
+		
+       
+		model.addAttribute("memberList", memberList);
+		}
+		return "practice/practice07/listTest";
+
+		
+	}
+		
+	}
+
