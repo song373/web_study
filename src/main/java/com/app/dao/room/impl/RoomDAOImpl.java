@@ -23,4 +23,12 @@ public class RoomDAOImpl implements RoomDAO {
 		return null;
 	}
 	
+	@Override
+	public int saveRoom(Room room) {
+		
+		//
+		
+		return 0;
+	}
+	
 }
