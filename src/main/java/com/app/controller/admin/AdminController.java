@@ -11,7 +11,6 @@ import com.app.service.room.RoomService;
 @Controller
 public class AdminController {
 	
-	
 	@Autowired
 	RoomService roomService;
 
@@ -28,6 +27,8 @@ public class AdminController {
 		
 		//room 정보 등록
 		int result = roomService.saveRoom(room);
+		System.out.println(result);
+		
 		
 		return "admin/registerRoom";
 	}
