@@ -44,16 +44,16 @@ public class RoomServiceImpl implements RoomService {
 		
 		return roomList;
 	}
-	
+
 	@Override
 	public int saveRoom(Room room) {
 		
-		//
+		//room 정보 저장해라~ -> DAO
 		int result = roomDAO.saveRoom(room);
 		
 		return result;
 	}
-	
+
 	
 	@Override
 	public Room findRoomByRoomId(int roomId) {
@@ -61,6 +61,14 @@ public class RoomServiceImpl implements RoomService {
 		Room room = roomDAO.findRoomByRoomId(roomId);
 		
 		return room;
+	}
+
+	@Override
+	public int removeRoom(int roomId) {
+		
+		int result = roomDAO.removeRoom(roomId);
+		
+		return result;
 	}
 
 }

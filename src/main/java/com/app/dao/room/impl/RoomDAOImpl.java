@@ -52,4 +52,13 @@ public class RoomDAOImpl implements RoomDAO {
 		return room;
 	}
 	
+	@Override
+	public int removeRoom(int roomId) {
+		
+		int result = sqlSessionTemplate.delete("room_mapper.removeRoom",roomId);
+		//delete 적용된 행의 수
+		
+		return result;
+	}
+	
 }
