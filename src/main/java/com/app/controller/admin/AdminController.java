@@ -61,7 +61,7 @@ public class AdminController {
 	}
 	
 	//roomId 식별자로 구분해서, 하나의 객실에 대한 상세정보 페이지
-	@GetMapping("/admin/room{roodId}")
+	@GetMapping("/admin/room/{roomId}")
 	public String room(@PathVariable String roomId, Model model) {
 		
 		Room room = roomService.findRoomByRoomId(Integer.parseInt(roomId));
@@ -76,14 +76,51 @@ public class AdminController {
 	public String removeRoom(HttpServletRequest request) {
 		
 		String roomId = request.getParameter("roomId");
-	
+		
 		int result = roomService.removeRoom(Integer.parseInt(roomId));
 		
-		//
+		//if(result > 0) 
 		
-		return "redirect:/admin/rooms";
+		return "redirect:/admin/rooms";	
+	}
+	
+	
+	//객실 정보 수정
+	@GetMapping("/admin/modifyRoom")   // /admin/modifyRoom?roomId=xxx
+	public String modifyRoom(HttpServletRequest request) {
+		
+		String roomId = request.getParameter("roomId");
+		//PK roomId 에 해당하는 정보를 조회 해서
+		Room room = roomService.findRoomByRoomId( Integer.parseInt(roomId));
+		System.out.println("기존에 가지고 있는 정보 조회한 값");
+		System.out.println(room);
+		
+		//화면에 기본값으로 보여주고! -> 사용자가 수정해라 ~
+		request.setAttribute("room", room);
+		
+		return "admin/modifyRoom";
+	}
+	
+	@PostMapping("/admin/modifyRoom")
+	public String modifyRoomAction(Room room) {
+		
+		System.out.println("수정하려고 하는 객체 값");
+		System.out.println(room);
+		// room 객체에 데이터가 저장되어 있는 상태
+		// 기존값, 변경하겠다고 수정한 값
+		int result = roomService.modifyRoom(room);
+		
+		if(result > 0) { //성공    목록~ or 호실 상세 페이지
+			//return "redirect:/admin/rooms";  //목록
+			return "redirect:/admin/room/" + room.getRoomId();  //해당 호실 상세 페이지
+		} else { //실패  // 다시 수정하는 페이지로 이동
+			return "redirect:/admin/modifyRoom?roomId=" + room.getRoomId();	
+		}
+		
 		
 	}
+	
+	
 	
 	
 	//관리자가 사용자계정관리 -> 사용자 계정을 추가
@@ -111,11 +148,11 @@ public class AdminController {
 		//Customer 사용자 저장용 서비스 메소드 활용
 		int result = userService.saveCustomerUser(user);
 		
-		//수정
-		if(result > 0 ) {//정상 저장 처리
+		
+		if(result > 0 ) { //정상 저장 처리
 			return "redirect:/admin/users";
 		} else {
-			return "admin/addUser";
+			return "admin/addUser";	
 		}
 	}
 	
