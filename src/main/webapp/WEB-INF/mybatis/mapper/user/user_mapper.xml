@@ -20,10 +20,19 @@
 	</select>
 	
 	
-	<select id="findUserById" resultType="User" parameterType="String" >
-		SELECT *
+	<select id="findUserById" resultType="User" parameterType="String">
+		SELECT * 
 		FROM T_USER
-		WHERE id= #{id}
+		WHERE id = #{id}
+	</select>
+	
+	
+	<select id="checkUserLogin" resultType="User" parameterType="User">
+		SELECT * 
+		FROM T_USER
+		WHERE id = #{id}
+		  AND pw = #{pw}
+		  AND user_type = #{userType}
 	</select>
 	
 </mapper>
