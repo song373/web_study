@@ -13,4 +13,8 @@ public interface UserService {
 	public int saveCustomerUser(User user);
 	
 	public List<User> findUserList();
+
+	User findUserById(String id);
+	
+	public User checkUserLogin(User user);
 }
