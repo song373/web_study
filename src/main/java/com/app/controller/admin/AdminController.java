@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.app.dto.room.Room;
 import com.app.dto.user.User;
+import com.app.dto.user.UserSearchCondition;
 import com.app.service.room.RoomService;
 import com.app.service.user.UserService;
 
@@ -157,10 +158,19 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/users")
-	public String users(Model model) {
-		List<User> userList = userService.findUserList();
+	public String users(Model model, UserSearchCondition userSearchCondition) {
+		
+		System.out.println(userSearchCondition);
+		
+		
+		//if 검색조건이 있으면 -> 조건 검색
+		//   검색조건이 없으면 -> 전체 검색
+		
+		//List<User> userList = userService.findUserList(); //전체 조회
+		List<User> userList = userService.findUserListBySearchCondition(userSearchCondition); //전체 조회
 		
 		model.addAttribute("userList", userList);
+		model.addAttribute("userSearchCondition", userSearchCondition);
 		
 		return "admin/users";
 	}
@@ -169,7 +179,7 @@ public class AdminController {
 	public String user(@PathVariable String id, Model model) {
 		
 		User user = userService.findUserById(id);
-		model.addAttribute("user", user);
+		model.addAttribute("user" , user);		
 		
 		return "admin/user";
 	}
@@ -179,7 +189,7 @@ public class AdminController {
 		
 		//수정 페이지 (기존 값 배치)
 		User user = userService.findUserById(id);
-		model.addAttribute("user",user);
+		model.addAttribute("user" , user);		
 		
 		return "admin/modifyUser";
 	}
@@ -187,15 +197,15 @@ public class AdminController {
 	@PostMapping("/admin/modifyUser")
 	public String modifyUserAction(User user) {
 		
-		System.out.println("modifyUser 수정하려고 넘어온  User 객체");
+		System.out.println("modifyUser 수정하려고 넘어온 User 객체");
 		System.out.println(user);
 		
-		int result = userService.modifyUserPw(user);
+		int result = userService.modifyUser(user);
 		
-		if(result > 0) {
+		if(result > 0) { //성공 : 사용자 상세페이지
 			return "redirect:/admin/user/" + user.getId();
-		} else {
-			return "admin/modifyUser/" +user.getId();
+		} else {  // 실패 : 다시 수정하는 페이지
+			return "redirect:/admin/modifyUser/" + user.getId();
 		}
 		
 		
@@ -204,15 +214,3 @@ public class AdminController {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
