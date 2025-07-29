@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveAdminUser(User user) {
-		//관리자 계정 추가 할때 필요한 체크 로직....
+		//관리자1 계정 추가 할때 필요한 체크 로직....
 
 		//user.setUserType("ADM");
 		user.setUserType( CommonCode.USER_USERTYPE_ADMIN );

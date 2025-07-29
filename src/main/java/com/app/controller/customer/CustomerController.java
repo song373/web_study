@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 
 	
-	//사용자서비스1 (계정에 관련된 것을 통합 관리 : 고객서비스/관리자서비스)  
+	//사용자서비스23 (계정에 관련된 것을 통합 관리 : 고객서비스/관리자서비스)  
 	
 	@Autowired
 	UserService userService;
