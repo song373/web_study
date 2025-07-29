@@ -11,6 +11,9 @@ import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -32,6 +35,7 @@ public class UserServiceImpl implements UserService {
 		//user.setUserType("ADM");
 		user.setUserType( CommonCode.USER_USERTYPE_ADMIN );
 		int result = userDAO.saveUser(user);
+		log.info("saveAdminUser 관리자 계정 추가 : {}", user);
 
 		return result;
 	}
@@ -123,5 +127,17 @@ public class UserServiceImpl implements UserService {
 		List<User> userList = userDAO.findUserListBySearchCondition(userSearchCondition);
 		
 		return userList;
+	}
+
+	@Override
+	public boolean isDuplicatedId(String id) {
+		
+		User user = userDAO.findUserById(id); //해당 ID로 DB에서 조회
+		
+		if(user == null) {  //해당 아이디 객체가 없다 -> id값 사용안한다 -> 중복 XXX
+			return false;	
+		} else { //아이디 객체가 있다 -> id값이 pk 사용되고 있다 -> 중복 OOO
+			return true;
+		}
 	}
 }
