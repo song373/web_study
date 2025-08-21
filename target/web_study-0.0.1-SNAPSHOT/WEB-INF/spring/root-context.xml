@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+    </bean>
 
-<!-- 	ioc 컨테이너에 빈 등록 -->
-<!-- 	roomDAO 빈 등록 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="/WEB-INF/mapper/**/*.xml"/>
+        <property name="configLocation" value="/WEB-INF/mybatis/mybatis-config.xml"/>
+    </bean>
 
-	<!-- RoomDAO roomDAO = new RoomDAOImpl() -->
-<!-- 	<bean id="roomDAO" class="com.app.dao.room.impl.RoomDAOImpl"> -->
-<!-- 	</bean> -->
-	
-	<!-- RoomService 등록  -->
-	
-	<!-- RoomService roomService = new RoomServiceImpl() -->
-<!-- 	<bean id="roomService" class="com.app.service.room.impl.RoomServiceImpl"> -->
-		<!-- 생성자를 통한 의존성 주입 -->
-		<!-- RoomService roomService = new RoomServiceImpl(roomDAO) -->
-<!-- 		<constructor-arg ref="roomDAO"></constructor-arg> -->
-		
-		<!-- setter 메소드를 통한 의존성 주입 -->
-		<!-- 
-			RoomService roomService = new RoomServiceImpl();
-			roomService.setRoomDAO(roomDAO);
-		 -->
-<!-- 		<property name="roomDAO" ref="roomDAO"></property> -->
-<!-- 	</bean> -->
-	
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.app.trip.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+    
+    <context:component-scan base-package="com.app.trip"/>
+
 </beans>

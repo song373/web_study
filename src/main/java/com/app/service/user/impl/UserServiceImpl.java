@@ -16,7 +16,7 @@ import com.app.validator.UserCustomValidator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
+//@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired

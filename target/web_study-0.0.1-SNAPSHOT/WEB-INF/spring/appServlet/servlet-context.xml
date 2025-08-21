@@ -1,30 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans:beans
-xmlns="http://www.springframework.org/schema/mvc"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:beans="http://www.springframework.org/schema/beans"
-xmlns:context="http://www.springframework.org/schema/context"
-xsi:schemaLocation="http://www.springframework.org/schema/mvc
-http://www.springframework.org/schema/mvc/spring-mvc.xsd
-http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!--
+	어노테이션 기반 컨트롤러를 사용 가능하게 합니다.
+	<annotation-driven> 태그는 파일 내에 한 번만 존재해야 합니다.
+	JSON 관련 설정은 <annotation-driven> 내부에 통합했습니다.
+	-->
+	<annotation-driven>
+		<message-converters>
+			<beans:bean	class="org.springframework.http.converter.StringHttpMessageConverter">
+				<beans:property name="supportedMediaTypes">
+					<beans:list>
+						<beans:value>text/html;charset=UTF-8</beans:value>
+						<beans:value>application/text;charset=UTF-8</beans:value>
+						<beans:value>text/plain;charset=UTF-8</beans:value>
+						<beans:value>application/json;charset=UTF-8</beans:value>
+					</beans:list>
+				</beans:property>
+			</beans:bean>
+		</message-converters>
+	</annotation-driven>
 
-<annotation-driven />
+	<!--
+	컴포넌트 스캔 설정
+	'com.app' 하위의 모든 패키지를 스캔하여 스프링 컴포넌트(Controller, Service, Repository 등)를 찾습니다.
+	-->
+	<context:component-scan base-package="com.app"></context:component-scan> <!-- 이 부분을 수정했습니다! -->
 
+	<!-- 뷰 리졸버(View Resolver) 설정 -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
+		<beans:property name="suffix" value=".jsp"></beans:property>
+	</beans:bean>
 
-<context:component-scan
-base-package="com.app.controller"></context:component-scan>
+	<!-- 정적 리소스(Static Resources) 매핑 설정 -->
+	<resources location="/resources/" mapping="/**"></resources>
 
-<!--  뷰리졸버 설정 부분 -->
-<beans:bean
-class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
-<beans:property name="suffix" value=".jsp"></beans:property>
-</beans:bean>
+	<!-- 인터셉터(Interceptor) 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/customer/**"/>
+			<exclude-mapping path="/customer/signin"/>
+			<exclude-mapping path="/customer/signup"/>
+			<exclude-mapping path="/customer/checkDupIdJson"/>
+			<beans:bean class="com.app.interceptor.LoginInterceptor"></beans:bean>
+		</interceptor>
 
-<resources location="/resources/" mapping="/**"></resources>
-
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<exclude-mapping path="/admin/signin"/>
+			<beans:bean class="com.app.interceptor.AdminInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
 
 </beans:beans>

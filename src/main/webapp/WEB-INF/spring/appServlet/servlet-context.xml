@@ -1,69 +1,27 @@
-<beans:beans
-	xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc.xsd
-	http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<annotation-driven />
+    <!-- 어노테이션 기반 컨트롤러 활성화 -->
+    <mvc:annotation-driven/>
 
+    <!-- 컨트롤러 컴포넌트 스캔 -->
+    <context:component-scan base-package="com.app.trip.controller"/>
 
-	<context:component-scan	base-package="com.app.controller"></context:component-scan>
-	<context:component-scan base-package="com.app.service"></context:component-scan>
-	<context:component-scan base-package="com.app.dao"></context:component-scan>
-<!-- 	<context:component-scan base-package="com.app.config"></context:component-scan> -->
-		
-
-	<!-- 뷰리졸버 설정 부분 -->
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
-		<beans:property name="suffix" value=".jsp"></beans:property>
-	</beans:bean>
-	
-	<resources location="/resources/" mapping="/**"></resources>
-												
-<!-- 	<resources location="/resources/image/" mapping="/image/**"></resources> -->
-<!-- 	<resources location="/resources/js/" mapping="/js/**"></resources> -->
-<!-- 	<resources location="/resources/css/" mapping="/css/**"></resources> -->
-									
-	
-	<annotation-driven>						
-		<message-converters>					
-			<!-- @ResponseBody로 String 처리할때 한글처리 -->				
-			<beans:bean	class="org.springframework.http.converter.StringHttpMessageConverter">			
-				<beans:property name="supportedMediaTypes">			
-					<beans:list>		
-						<beans:value>text/html;charset=UTF-8</beans:value>	
-						<beans:value>application/text;charset=UTF-8</beans:value>	
-						<beans:value>text/plain;charset=UTF-8</beans:value>	
-						<beans:value>application/json;charset=UTF-8</beans:value>	
-					</beans:list>		
-				</beans:property>			
-			</beans:bean>				
-		</message-converters>					
-	</annotation-driven>						
+    <!-- 뷰 리졸버 -->
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/views/" />
+    <property name="suffix" value=".jsp" />
+</bean>
 
 
-	<interceptors>
-		<interceptor>
-			<mapping path="/**"/>
-			<exclude-mapping path="/customer/signin"/>
-			<exclude-mapping path="/customer/signup"/>
-			<exclude-mapping path="/customer/checkDupIdJson"/>
-			<exclude-mapping path="/"/>
-			<exclude-mapping path="/main"/>
-			<exclude-mapping path="/css/**"/>
-			<exclude-mapping path="/js/**"/>
-			<exclude-mapping path="/image/**"/>
-			<beans:bean class="com.app.interceptor.LoginInterceptor"></beans:bean>
-		</interceptor>
-	</interceptors>
 
-
-</beans:beans>
+    <!-- 정적 자원 매핑 -->
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+</beans>

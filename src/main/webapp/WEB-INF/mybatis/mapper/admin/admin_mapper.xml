@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.trip.mapper.AdminMapper">
+    <select id="selectAdminById" parameterType="string" resultType="com.app.trip.dto.Admin">
+        SELECT * FROM ADMIN WHERE ADMIN_ID = #{id}
+    </select>
+    <update id="updateAdmin" parameterType="com.app.trip.dto.Admin">
+        UPDATE ADMIN SET 
+            ADMIN_PW = #{adminPw},
+            NAME = #{name},
+            FAIL_COUNT = #{failCount},
+            LOCK_TIME = #{lockTime}
+        WHERE ADMIN_ID = #{adminId}
+    </update>
+    <insert id="insertAdmin" parameterType="com.app.trip.dto.Admin">
+        INSERT INTO ADMIN (ADMIN_ID, ADMIN_PW, NAME, FAIL_COUNT, LOCK_TIME)
+        VALUES (#{adminId}, #{adminPw}, #{name}, #{failCount}, #{lockTime})
+    </insert>
+</mapper>

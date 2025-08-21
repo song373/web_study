@@ -10,13 +10,11 @@
 <style>
 </style>
 
-<!-- 	<link href="../../resources/css/main.css" rel="stylesheet"> -->
 	<link href="/css/main.css" rel="stylesheet">
 
 </head>
 <body>
 	<h1>메인 페이지</h1>
-	
 	<c:if test="${loginUserId == null}">
 		<button onClick="location.href='/customer/signup'">회원가입</button>
 		<button onClick="location.href='/customer/signin'">로그인</button>
