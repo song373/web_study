@@ -2,6 +2,7 @@ com\app\config\BeanConfiguration.class
 com\app\dto\user\UserSearchCondition.class
 com\app\trip\controller\UserController.class
 com\app\trip\dto\Admin.class
+com\app\dto\study\Member.class
 com\app\dto\board\Board.class
 com\app\controller\study\practice\practice04\Practice04Controller.class
 com\app\util\MyCookieUtil.class
@@ -37,6 +38,7 @@ com\app\dto\room\RoomSearchCondition.class
 com\app\controller\study\practice\practice10\Practice10Controller.class
 com\app\controller\study\practice\practice15\Practice15CustomerService.class
 com\app\controller\study\practice\practice15\Practice15RoomService.class
+com\app\dto\study\DrinkItem.class
 com\app\controller\study\practice\practice15\Practice15Customer.class
 com\app\dto\board\Post.class
 com\app\service\accomodation\AccomodationService.class
@@ -52,9 +54,9 @@ com\app\trip\service\impl\AdminServiceImpl.class
 com\app\dto\study\practice\practice03\Beverage.class
 com\app\controller\study\side_conception\MyViewResolver.class
 com\app\controller\study\request\Request03Controller.class
+com\app\trip\controller\MainController.class
 com\app\controller\study\practice\practice01\Practice01Controller.class
 com\app\util\LoginManager.class
-com\app\trip\controller\LoginController.class
 com\app\dto\study\practice\practice07\Member.class
 com\app\controller\MainController.class
 com\app\controller\study\practice\practice14\PlateBean.class
@@ -102,6 +104,7 @@ com\app\controller\study\rest\Rest02Controller.class
 com\app\controller\study\redirect_forward\RedirectForwara01Controller.class
 com\app\controller\HomeController.class
 com\app\trip\util\PasswordValidator.class
+com\app\util\JwtProvider.class
 com\app\dto\study\practice\practice06\PersonBmi.class
 com\app\controller\study\practice\practice15\Practice15CustomerDAOImpl.class
 com\app\controller\study\practice\practice06\Practice06Controller.class
@@ -113,9 +116,9 @@ com\app\controller\study\side_conception\MyModelAndView.class
 com\app\controller\study\viewdata\ViewData01Controller.class
 com\app\controller\study\practice\practice14\Practice14Configuration.class
 com\app\controller\study\request\Request02Controller.class
-com\app\trip\dto\user\User.class
 com\app\controller\study\practice\practice15\Practice15RoomController.class
 com\app\dto\study\practice\practice08\Member.class
+com\app\controller\study\react_spring_api\ReactSpringAPIController.class
 com\app\dao\user\impl\UserDAOImpl.class
 com\app\controller\study\request\MemberController.class
 com\app\validator\UserCustomValidator.class
